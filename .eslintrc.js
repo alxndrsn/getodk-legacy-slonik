@@ -23,6 +23,7 @@ module.exports = {
   },
   "root": true,
   "rules": {
+  'unicorn/expiring-todo-comments': 'off',
     "@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-explicit-any": 0,
