@@ -1,13 +1,1 @@
-/coverage
-node_modules
-*.log
-.*
-!.editorconfig
-!.eslintignore
-!.eslintrc
-!.gitignore
-!.ncurc.js
-!.npmignore
-!.README
-!.travis.yml
-!yarn.lock
+/node_modules/
