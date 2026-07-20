@@ -103,7 +103,7 @@
     "eslint": "eslint --cache --ext '.ts'",
     "lint": "eslint ./src ./test && yarn type-check",
     "test": "NODE_ENV=test nyc ava --verbose",
-    "type-check": "tsc -p ."
+    "type-check": "NODE_OPTIONS=--max-old-space-size=8192 tsc --noEmit -p tsconfig.json"
   },
   "types": "./dist/src/index.d.ts",
   "version": "23.6.2-4"
