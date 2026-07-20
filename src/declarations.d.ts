@@ -14,3 +14,7 @@ declare module 'pg/lib/type-overrides' {
 
   export default TypeOverrides;
 }
+
+declare module 'is-plain-object' {
+  export function isPlainObject(value: unknown): boolean;
+}
