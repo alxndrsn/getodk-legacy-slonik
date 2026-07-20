@@ -1,4 +1,4 @@
-{
+module.exports = {
   "extends": [
     "canonical",
     "canonical/typescript"
@@ -60,7 +60,5 @@
       }
     ],
     "require-await": 0,
-    "unicorn/numeric-separators-style": 0,
-    "unicorn/prevent-abbreviations": 0
   }
-}
+};
