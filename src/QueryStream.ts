@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 /* eslint-disable fp/no-class */
 /* eslint-disable fp/no-this */
+/* eslint-disable canonical/id-match */
 /* eslint-disable id-match */
 /* eslint-disable promise/prefer-await-to-callbacks */
 
