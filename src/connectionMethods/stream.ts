@@ -57,7 +57,7 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
             }
           }
 
-          // eslint-disable-next-line fp/no-this, babel/no-invalid-this
+          // eslint-disable-next-line fp/no-this, @babel/no-invalid-this
           this.push({
             fields: datum.fields,
             row: finalRow,

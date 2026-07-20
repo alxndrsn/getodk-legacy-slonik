@@ -319,7 +319,7 @@ const sqlTypes = async () => {
 `);
 
   // @ts-expect-error
-  sql`SELECT ${sql.json(undefined)}`;
+  sql`SELECT ${sql.json(undefined)}`; // eslint-disable-line @babel/no-unused-expressions
 
   await connection.query(sql`
     SELECT bar, baz
@@ -332,6 +332,7 @@ const sqlTypes = async () => {
   )} AS foo(bar, baz)
 `);
 
+  // eslint-disable-next-line @babel/no-unused-expressions
   sql`
     SELECT 1
     FROM ${sql.identifier(['bar', 'baz'])}
@@ -341,6 +342,7 @@ const sqlTypes = async () => {
 const createSqlTagTypes = () => {
   const sqlTag: SqlTaggedTemplateType = createSqlTag();
 
+  // eslint-disable-next-line @babel/no-unused-expressions
   sqlTag`
     SELECT 1;
   `;
@@ -392,8 +394,8 @@ const samplesFromDocs = async () => {
   };
 
   const sample3 = async () => {
-    sql`SELECT id FROM foo WHERE id = ANY(${sql.array([1, 2, 3], 'int4')})`;
-    sql`SELECT id FROM foo WHERE id != ALL(${sql.array([1, 2, 3], 'int4')})`;
+    sql`SELECT id FROM foo WHERE id = ANY(${sql.array([1, 2, 3], 'int4')})`; // eslint-disable-line @babel/no-unused-expressions
+    sql`SELECT id FROM foo WHERE id != ALL(${sql.array([1, 2, 3], 'int4')})`; // eslint-disable-line @babel/no-unused-expressions
   };
 
   const sample4 = async () => {
@@ -410,6 +412,7 @@ const samplesFromDocs = async () => {
   };
 
   const sample5 = async () => {
+    // eslint-disable-next-line @babel/no-unused-expressions
     sql`
       SELECT 1
       FROM ${sql.identifier(['bar', 'baz'])}

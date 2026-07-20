@@ -100,6 +100,7 @@ test('nests expressions', (t) => {
 
 test('throws is member is not a SQL token or a primitive value expression', (t) => {
   const error = t.throws(() => {
+    // eslint-disable-next-line @babel/no-unused-expressions
     sql`${sql.join(
       [
         // @ts-expect-error

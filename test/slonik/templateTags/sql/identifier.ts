@@ -34,6 +34,7 @@ test('creates an object describing a query with inlined identifiers (specifier)'
 
 test('throws if an identifier name array member type is not a string', (t) => {
   const error = t.throws(() => {
+    // eslint-disable-next-line @babel/no-unused-expressions
     sql`${sql.identifier([
       // @ts-expect-error
       () => {},

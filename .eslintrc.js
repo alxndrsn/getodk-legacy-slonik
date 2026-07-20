@@ -24,8 +24,11 @@ module.exports = {
   "root": true,
   "rules": {
   'jsdoc/newline-after-description': 'off',
+  'jsdoc/tag-lines': ['error', 'any', { startLines: 1 }],
   'unicorn/expiring-todo-comments': 'off',
   'unicorn/numeric-separators-style': 'off',
+  'unicorn/prevent-abbreviations': 'off',
+  'canonical/filename-match-regex': 'off',
     "@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-explicit-any": 0,

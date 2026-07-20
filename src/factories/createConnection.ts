@@ -110,11 +110,11 @@ export const createConnection = async (
       pool.typeOverrides = createTypeOverrides(connection, clientConfiguration.typeParsers);
     }
 
-    // eslint-disable-next-line id-match
+    // eslint-disable-next-line canonical/id-match
     connection._types = await pool.typeOverrides;
 
     if (connection.native) {
-      // eslint-disable-next-line id-match
+      // eslint-disable-next-line canonical/id-match
       connection.native._types = await pool.typeOverrides;
     }
   }

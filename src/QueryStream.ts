@@ -2,7 +2,6 @@
 /* eslint-disable fp/no-class */
 /* eslint-disable fp/no-this */
 /* eslint-disable canonical/id-match */
-/* eslint-disable id-match */
 /* eslint-disable promise/prefer-await-to-callbacks */
 
 import {
@@ -49,7 +48,7 @@ export class QueryStream extends Readable {
     this.cursor = new Cursor(text, values);
     this._reading = false;
     this._closed = false;
-    this.batchSize = (options || {}).batchSize || 100;
+    this.batchSize = (options || {}).batchSize || 100; // eslint-disable-line @typescript-eslint/prefer-optional-chain
 
     // delegate Submittable callbacks to cursor
     this.handleRowDescription = this.cursor.handleRowDescription.bind(this.cursor);

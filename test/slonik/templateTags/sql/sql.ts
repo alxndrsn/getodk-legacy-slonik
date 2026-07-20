@@ -5,9 +5,6 @@ import {
 import {
   SqlToken,
 } from '../../../../src/tokens';
-import type {
-  SqlSqlTokenType,
-} from '../../../../src/types';
 
 const sql = createSqlTag();
 
@@ -69,7 +66,7 @@ test('does not allow non-sql templates', (t) => {
 
   const error = t.throws(() => {
     // @ts-expect-error
-    sql`SELECT ${'baz'} FROM (${query0})`;
+    sql`SELECT ${'baz'} FROM (${query0})`; // eslint-disable-line @babel/no-unused-expressions
   });
 
   t.is(error.message, 'Unexpected value expression.');
@@ -78,7 +75,7 @@ test('does not allow non-sql templates', (t) => {
 test('throws if bound an undefined value', (t) => {
   const error = t.throws(() => {
     // @ts-expect-error
-    sql`SELECT ${undefined}`;
+    sql`SELECT ${undefined}`; // eslint-disable-line @babel/no-unused-expressions
   });
 
   t.is(error.message, 'SQL tag cannot be bound an undefined value.');
