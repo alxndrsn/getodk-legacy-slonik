@@ -4,6 +4,7 @@
     "name": "Gajus Kuizinas",
     "url": "http://gajus.com"
   },
+  "packageManager": "yarn@4.12.0",
   "ava": {
     "extensions": [
       "ts"
