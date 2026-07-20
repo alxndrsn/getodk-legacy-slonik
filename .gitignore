@@ -10,4 +10,5 @@ node_modules
 !.npmignore
 !.README
 !.travis.yml
+!.yarnrc.yml
 !yarn.lock
