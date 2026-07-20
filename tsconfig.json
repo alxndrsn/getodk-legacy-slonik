@@ -5,9 +5,10 @@
     "module": "commonjs",
     "noEmit": true,
     "rootDir": ".",
+    "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2018"
+    "target": "es2022"
   },
   "exclude": [
     "node_modules",
