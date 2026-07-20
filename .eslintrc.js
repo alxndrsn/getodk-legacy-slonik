@@ -23,7 +23,9 @@ module.exports = {
   },
   "root": true,
   "rules": {
+  'jsdoc/newline-after-description': 'off',
   'unicorn/expiring-todo-comments': 'off',
+  'unicorn/numeric-separators-style': 'off',
     "@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-explicit-any": 0,

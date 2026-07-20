@@ -83,7 +83,7 @@ test('JSON encodes boolean values', (t) => {
 test('throws if payload is undefined', (t) => {
   const error = t.throws(() => {
     // @ts-expect-error
-    sql`SELECT ${sql.json(undefined)}`;
+    sql`SELECT ${sql.json(undefined)}`; // eslint-disable-line @babel/no-unused-expressions
   });
 
   t.is(error.message, 'JSON payload must not be undefined.');
@@ -92,7 +92,7 @@ test('throws if payload is undefined', (t) => {
 test('throws if payload cannot be stringified (non-primitive object)', (t) => {
   const error = t.throws(() => {
     // @ts-expect-error
-    sql`SELECT ${sql.json(() => {})}`;
+    sql`SELECT ${sql.json(() => {})}`; // eslint-disable-line @babel/no-unused-expressions
   });
 
   t.is(error.message, 'JSON payload must be a primitive value or a plain object.');
@@ -106,7 +106,7 @@ test('throws if payload cannot be stringified (circular reference)', (t) => {
     };
     foo.bar = bar;
 
-    sql`SELECT ${sql.json(foo)}`;
+    sql`SELECT ${sql.json(foo)}`; // eslint-disable-line @babel/no-unused-expressions
   });
 
   t.is(error.message, 'JSON payload cannot be stringified.');
