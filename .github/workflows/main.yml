@@ -37,7 +37,7 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        cache: 'yarn'
     - run: corepack enable
     # TODO Should be:
     #- run: yarn install --immutable
