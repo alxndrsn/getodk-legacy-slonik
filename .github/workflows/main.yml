@@ -18,6 +18,7 @@ jobs:
         image: postgres:12
         env:
           POSTGRES_PASSWORD: odktest
+          POSTGRES_HOST_AUTH_METHOD: trust
         ports:
           - 5432:5432
         options: >-
@@ -27,11 +28,11 @@ jobs:
           --health-retries 50
     steps:
     - uses: actions/checkout@v6
-    - run: corepack enable
     - uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: corepack enable
     #- run: yarn install --immutable
     - run: yarn install
     - run: yarn lint
