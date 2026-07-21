@@ -37,13 +37,8 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
-    #    cache: 'yarn'
-    - run: yarn install #--immutable
-    - uses: actions/upload-artifact@v6
-      if: always()
-      with:
-        name: yarn-lock-${{ matrix.node-version }}
-        path: yarn.lock
+        cache: 'yarn'
+    - run: yarn install --immutable
     - run: yarn lint
     - run: yarn build
     - run: yarn test
