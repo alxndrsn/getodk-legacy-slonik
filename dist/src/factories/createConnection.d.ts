@@ -1,5 +1,0 @@
-import type { MaybePromiseType, ClientConfigurationType, ConnectionTypeType, DatabasePoolType, DatabasePoolConnectionType, InternalDatabaseConnectionType, InternalDatabasePoolType, Logger, TaggedTemplateLiteralInvocationType } from '../types';
-declare type ConnectionHandlerType = (connectionLog: Logger, connection: InternalDatabaseConnectionType, boundConnection: DatabasePoolConnectionType, clientConfiguration: ClientConfigurationType) => MaybePromiseType<unknown>;
-declare type PoolHandlerType = (pool: DatabasePoolType) => Promise<unknown>;
-export declare const createConnection: (parentLog: Logger, pool: InternalDatabasePoolType, clientConfiguration: ClientConfigurationType, connectionType: ConnectionTypeType, connectionHandler: ConnectionHandlerType, poolHandler: PoolHandlerType, query?: TaggedTemplateLiteralInvocationType | null) => Promise<any>;
-export {};
