@@ -38,7 +38,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     #    cache: 'yarn'
-    - run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install #--immutable
+    - run: yarn install #--immutable
     - uses: actions/upload-artifact@v6
       if: always()
       with:
