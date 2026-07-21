@@ -34,11 +34,11 @@ jobs:
           --health-retries 50
     steps:
     - uses: actions/checkout@v6
+    - run: corepack enable
     - uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: corepack enable
     - name: Cache node modules & native builds
       uses: actions/cache@v6
       with:
