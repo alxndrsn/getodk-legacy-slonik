@@ -42,6 +42,11 @@ jobs:
     # TODO Should be:
     #- run: yarn install --immutable
     - run: yarn install
+		- uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: yarn-lock-${{ matrix.node-version }}
+        path: yarn.lock
     - run: yarn lint
     - run: yarn build
     - run: yarn test
