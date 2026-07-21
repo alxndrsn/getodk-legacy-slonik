@@ -38,15 +38,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - name: Cache node modules & native builds
-      uses: actions/cache@v6
-      with:
-        path: |
-          node_modules
-          ~/.cache/node-gyp
-        key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-node-${{ matrix.node-version }}-
     - run: yarn install --immutable
     - run: yarn lint
     - run: yarn build
