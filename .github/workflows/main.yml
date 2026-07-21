@@ -13,12 +13,11 @@ jobs:
       fail-fast: false
       matrix:
         node-version:
-        #- 14
-        #- 16
+        # Aim to support any version from getodk/central-backend's current version onwards.
+        # See: https://github.com/getodk/central-backend/blob/master/package.json
         - 18
         - 20
         - 22
-        #- 24
     services:
       postgres:
         image: postgres:12
