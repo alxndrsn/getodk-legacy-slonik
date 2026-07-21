@@ -1,0 +1,44 @@
+name: main
+
+on:
+  push:
+    branches: master
+  pull_request:
+
+jobs:
+  main:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version:
+        # Aim to support any version from getodk/central-backend's current version onwards.
+        # See: https://github.com/getodk/central-backend/blob/master/package.json
+        - 18
+        - 20
+        - 22
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: odktest
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 1s
+          --health-timeout 5s
+          --health-retries 50
+    steps:
+    - uses: actions/checkout@v6
+    - run: corepack enable
+    - uses: actions/setup-node@v6
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+    - run: yarn install --immutable
+    - run: yarn lint
+    - run: yarn build
+    - run: yarn test
