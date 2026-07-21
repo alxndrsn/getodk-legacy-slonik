@@ -49,6 +49,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-${{ matrix.node-version }}-
     - run: yarn install --immutable
+    - uses: actions/upload-artifact@v5
+      if: always()
+      with:
+        name: yarn-lock-${{ matrix.node-version }}
+        path: yarn.lock
     - run: yarn lint
     - run: yarn build
     - run: yarn test
