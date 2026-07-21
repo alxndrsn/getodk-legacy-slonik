@@ -28,7 +28,8 @@ jobs:
       with:
         node-version: 16
         cache: 'npm'
-    - run: yarn install --immutable
+    #- run: yarn install --immutable
+    - run: yarn install
     - run: yarn lint
     - run: yarn build
     - run: yarn test
