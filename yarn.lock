@@ -1746,13 +1746,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async-generator-function@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "async-generator-function@npm:1.0.0"
-  checksum: 1066131c229bb1b342c983bbf6df0a5088a8e96114b796a6f481a541348f006af22de1b4c1ccc520cf7b5fa98f9ac470bde17df438659e6b2cc06c4f7863d72b
-  languageName: node
-  linkType: hard
-
 "asynckit@npm:^0.4.0":
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
@@ -4179,7 +4172,7 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"get-intrinsic@npm:^1.1.3, get-intrinsic@npm:^1.2.1, get-intrinsic@npm:^1.2.3, get-intrinsic@npm:^1.2.4":
+"get-intrinsic@npm:1.2.4":
   version: 1.2.4
   resolution: "get-intrinsic@npm:1.2.4"
   dependencies:
@@ -4189,27 +4182,6 @@ fsevents@~2.3.2:
     has-symbols: ^1.0.3
     hasown: ^2.0.0
   checksum: 5cb54f32b070a3dd3a70a8f3e6b7fc96bc01dc3cbaafc9fa300eb8b25ba9ccbe6a457cb8039d1e908fb91811935e4f93605e962f2fbc32bece6b018abdbbb650
-  languageName: node
-  linkType: hard
-
-"get-intrinsic@npm:^1.2.5, get-intrinsic@npm:^1.2.6, get-intrinsic@npm:^1.2.7, get-intrinsic@npm:^1.3.0":
-  version: 1.3.1
-  resolution: "get-intrinsic@npm:1.3.1"
-  dependencies:
-    async-function: ^1.0.0
-    async-generator-function: ^1.0.0
-    call-bind-apply-helpers: ^1.0.2
-    es-define-property: ^1.0.1
-    es-errors: ^1.3.0
-    es-object-atoms: ^1.1.1
-    function-bind: ^1.1.2
-    generator-function: ^2.0.0
-    get-proto: ^1.0.1
-    gopd: ^1.2.0
-    has-symbols: ^1.1.0
-    hasown: ^2.0.2
-    math-intrinsics: ^1.1.0
-  checksum: e127cccc582bddcea69be3c6578e409c8fe73ad20d9d6c1f3c8648b2e49e593eb7b7fe67df8d532d63c81406042af6e9c79d725030ec402f6f27316efefc7b47
   languageName: node
   linkType: hard
 
