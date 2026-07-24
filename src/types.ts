@@ -101,6 +101,7 @@ export type ClientConfigurationInputType = Partial<ClientConfigurationType>;
 export type StreamFunctionType = (
   sql: TaggedTemplateLiteralInvocationType,
   streamHandler: StreamHandlerType,
+  options?: any,
 ) => Promise<Record<string, unknown> | null>; // bindPoolConnection returns an object
 
 export type QueryCopyFromBinaryFunctionType = (

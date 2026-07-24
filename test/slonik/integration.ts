@@ -607,7 +607,7 @@ if (pgNativeBindingsAreAvailable) {
 
     const messages: Array<Record<string, unknown>> = [];
 
-    await new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
       pool.stream(sql`
         SELECT name
         FROM person
