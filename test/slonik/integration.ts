@@ -473,7 +473,7 @@ if (pgNativeBindingsAreAvailable) {
       INSERT INTO person (name) VALUES ('foo'), ('bar'), ('baz')
     `);
 
-    const messages: Array<Record<string, unknown>> = [];
+    const messages: Array<Array<any>> = [];
 
     await pool.stream(sql`
       SELECT name
