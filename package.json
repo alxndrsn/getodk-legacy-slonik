@@ -5,6 +5,9 @@
     "url": "http://gajus.com"
   },
   "packageManager": "yarn@2.4.3",
+  "resolutions": {
+    "get-intrinsic": "1.2.4"
+  },
   "ava": {
     "extensions": [
       "ts"
@@ -38,6 +41,8 @@
   },
   "description": "A PostgreSQL client with strict types, detailed logging and assertions.",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "4.33.0",
+    "@typescript-eslint/parser": "4.33.0",
     "@types/concat-stream": "^1.6.0",
     "@types/node": "14",
     "@types/pg": "^7.14.10",
@@ -47,7 +52,9 @@
     "ava": "^3.15.0",
     "coveralls": "^3.1.0",
     "eslint": "^7.21.0",
-    "eslint-config-canonical": "^25.9.0",
+    "eslint-plugin-ava": "11.0.0",
+    "eslint-plugin-fp": "2.3.0",
+    "eslint-plugin-import": "2.29.1",
     "expect-type": "^0.11.0",
     "nyc": "^15.1.0",
     "semantic-release": "^17.4.1",
