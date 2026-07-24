@@ -14,14 +14,16 @@ const stream = async (connectionLogger, connection, clientConfiguration, rawSql,
             throw new errors_1.UnexpectedStateError('Result cursors do not work with the native driver. Use JavaScript driver.');
         }
         const query = new pg_query_stream_1.default(finalSql, finalValues, opts);
+        const isArrayMode = (opts === null || opts === void 0 ? void 0 : opts.rowMode) === 'array';
         const queryStream = finalConnection.query(query);
         let fields;
-        finalConnection.connection.once('rowDescription', (rowDescription) => {
-            fields = rowDescription.fields.map((f) => ({
-                name: f.name,
-                dataTypeId: f.dataTypeID,
-            }));
-        });
+        if (!isArrayMode)
+            finalConnection.connection.once('rowDescription', (rowDescription) => {
+                fields = rowDescription.fields.map((f) => ({
+                    name: f.name,
+                    dataTypeId: f.dataTypeID,
+                }));
+            });
         const rowTransformers = [];
         for (const interceptor of clientConfiguration.interceptors) {
             if (interceptor.transformRow) {
@@ -39,11 +41,16 @@ const stream = async (connectionLogger, connection, clientConfiguration, rawSql,
                         finalRow = rowTransformer(executionContext, actualQuery, finalRow, fields);
                     }
                 }
-                // eslint-disable-next-line fp/no-this
-                this.push({
-                    fields,
-                    row: finalRow,
-                });
+                if (isArrayMode) {
+                    this.push(row);
+                }
+                else {
+                    // eslint-disable-next-line fp/no-this
+                    this.push({
+                        fields,
+                        row: finalRow,
+                    });
+                }
                 callback();
             }));
             transformedStream.on('end', () => {
