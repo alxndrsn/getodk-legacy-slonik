@@ -99,7 +99,7 @@
     "url": "https://github.com/gajus/slonik"
   },
   "scripts": {
-    "build": "rm -fr ./dist && tsc -p tsconfig.lib.json",
+    "build": "rm -fr ./dist && tsc -p tsconfig.lib.json && rm -rf ./dist/test",
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md",
     "lint": "yarn lint:js && yarn lint:ts",
     "lint:js": "./scripts/eslint",
