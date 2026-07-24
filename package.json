@@ -47,7 +47,6 @@
     "ava": "^3.15.0",
     "coveralls": "^3.1.0",
     "eslint": "^7.21.0",
-    "eslint-config-canonical": "^25.9.0",
     "expect-type": "^0.11.0",
     "nyc": "^15.1.0",
     "semantic-release": "^17.4.1",
