@@ -437,7 +437,7 @@ __metadata:
     pg-connection-string: "npm:^2.4.0"
     pg-copy-streams: "npm:^5.1.1"
     pg-copy-streams-binary: "npm:^2.0.1"
-    pg-cursor: "npm:^2.5.2"
+    pg-query-stream: "npm:^4.16.0"
     postgres-array: "npm:^3.0.1"
     postgres-interval: "npm:^3.0.0"
     roarr: "npm:^4.2.0"
@@ -8105,12 +8105,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pg-cursor@npm:^2.5.2":
-  version: 2.10.5
-  resolution: "pg-cursor@npm:2.10.5"
+"pg-cursor@npm:^2.21.0":
+  version: 2.21.0
+  resolution: "pg-cursor@npm:2.21.0"
   peerDependencies:
     pg: ^8
-  checksum: 10/244dc9c17d878f35fa4d7397a419882061085b7aeba46a66ad8f8ef639650fdc011018ce1cee37272afa0f799983cd004c01983270d88c8c1ce4975deaf45758
+  checksum: 10/c0800dc14d119c36cdf1478a12e7af6edfa824e3a9bf2bda70f5dc62a66819617c4cf4ee32f0818eab89f72e2856f3dd499b092f49565ca991a9ecdcda472da7
   languageName: node
   linkType: hard
 
@@ -8148,6 +8148,17 @@ __metadata:
   version: 1.15.0
   resolution: "pg-protocol@npm:1.15.0"
   checksum: 10/be9a534a45cbae8edfa1766f7ee261cb63e8bd136e0e9e216656853ae2ab6acfb281e467c7b362ac0eb5270dad146fd9a553e25ef5c425749114630b79aca8fd
+  languageName: node
+  linkType: hard
+
+"pg-query-stream@npm:^4.16.0":
+  version: 4.16.0
+  resolution: "pg-query-stream@npm:4.16.0"
+  dependencies:
+    pg-cursor: "npm:^2.21.0"
+  peerDependencies:
+    pg: ^8
+  checksum: 10/3e0a20b078a74750b6bcbe2f4ca082f67a6e9c7b2b24e60c896df60b7cfb58eb3fc61b4bd2e0fbb8fe4a1bfdb5e7ab6dcb25680d63f8d2a09c84c52c81564cd4
   languageName: node
   linkType: hard
 
