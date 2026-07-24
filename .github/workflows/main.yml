@@ -38,7 +38,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: yarn install --immutable
-    - run: yarn add -D eslint@9 typescript-eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+    - run: yarn add -D eslint@9 typescript typescript-eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
     - run: git diff -- package.json
     - uses: actions/upload-artifact@v6
       if: always()
