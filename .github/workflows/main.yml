@@ -17,17 +17,27 @@ jobs:
         # See: https://github.com/getodk/central-backend/blob/master/package.json
         - 24
         - 26
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: odktest
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 1s
+          --health-timeout 5s
+          --health-retries 50
     steps:
     - uses: actions/checkout@v6
-    - run: ./scripts/start-postgres
     - run: corepack enable
     - uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: yarn install --immutable
-    - run: yarn add -D eslint@^9.0.0 typescript@^5.0.0 typescript-eslint@^8.0.0 @typescript-eslint/parser@^8.0.0 @typescript-eslint/eslint-plugin@^8.0.0
-    - run: git diff -- package.json
     - uses: actions/upload-artifact@v6
       if: always()
       with:
@@ -35,4 +45,4 @@ jobs:
         path: yarn.lock
     - run: yarn lint
     - run: yarn build
-    - run: yarn test:ava
+    - run: yarn test
