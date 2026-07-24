@@ -45,4 +45,4 @@ jobs:
         path: yarn.lock
     - run: yarn lint
     - run: yarn build
-    - run: yarn test
+    - run: yarn test:ava
