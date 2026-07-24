@@ -39,7 +39,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: yarn install --immutable
-    - run: yarn add -D eslint-plugin-fp@2.3.0 eslint-plugin-import@2.29.1 eslint-plugin-ava@11.0.0
+    - run: yarn add -D eslint-plugin-fp@2.3.0 eslint-plugin-import@2.29.1 eslint-plugin-ava@11.0.0 eslint@8
     - uses: actions/upload-artifact@v5
       if: always()
       with:
