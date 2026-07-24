@@ -16,8 +16,8 @@ jobs:
         # Aim to support any version from getodk/central-backend's current version onwards.
         # See: https://github.com/getodk/central-backend/blob/master/package.json
         - 18
-        #- 20
-        #- 22
+        - 20
+        - 22
     services:
       postgres:
         image: postgres:14
@@ -37,7 +37,6 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
     - run: yarn install --immutable
     - uses: actions/upload-artifact@v5
       if: always()
