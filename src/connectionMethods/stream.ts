@@ -54,17 +54,17 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
         });
 
         const transformedStream = queryStream.pipe(through.obj(function (row: any, enc: any, callback: any) {
+          let finalRow = row;
+
+          if (rowTransformers.length) {
+            for (const rowTransformer of rowTransformers) {
+              finalRow = rowTransformer(executionContext, actualQuery, finalRow, fields);
+            }
+          }
+
           if(isArrayMode) {
             this.push(row);
           } else {
-            let finalRow = row;
-
-            if (rowTransformers.length) {
-              for (const rowTransformer of rowTransformers) {
-                finalRow = rowTransformer(executionContext, actualQuery, finalRow, fields);
-              }
-            }
-
             // eslint-disable-next-line fp/no-this
             this.push({
               fields,
