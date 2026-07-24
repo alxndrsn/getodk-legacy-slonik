@@ -42,16 +42,16 @@
   "description": "A PostgreSQL client with strict types, detailed logging and assertions.",
   "devDependencies": {
     "@types/concat-stream": "^1.6.0",
-    "@types/node": "14",
+    "@types/node": "latest",
     "@types/pg": "^7.14.10",
     "@types/pg-copy-streams": "^1.2.1",
     "@types/sinon": "^9.0.10",
     "@types/through2": "^2.0.36",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
     "ava": "^3.15.0",
     "coveralls": "^3.1.0",
-    "eslint": "8",
+    "eslint": "^9.0.0",
     "eslint-plugin-ava": "11.0.0",
     "eslint-plugin-fp": "2.3.0",
     "eslint-plugin-import": "2.29.1",
@@ -60,7 +60,8 @@
     "semantic-release": "^17.4.1",
     "sinon": "^9.2.4",
     "ts-node": "^9.1.1",
-    "typescript": "4.2.2"
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.0.0"
   },
   "engines": {
     "node": ">=10.0"
@@ -100,8 +101,9 @@
   "scripts": {
     "build": "rm -fr ./dist && tsc -p tsconfig.lib.json",
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md",
-    "eslint": "eslint --cache --ext '.ts'",
-    "lint": "yarn eslint ./src ./test && yarn type-check",
+    "lint": "yarn lint:js && yarn lint:ts",
+    "lint:js": "./scripts/eslint",
+    "lint:ts": "yarn type-check",
     "test": "yarn lint && yarn build && yarn test:ava",
     "test:ava": "NODE_ENV=test nyc ava --verbose",
     "type-check": "tsc -p ."
