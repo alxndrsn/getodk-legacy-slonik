@@ -1,7 +1,6 @@
 {
   "extends": [
-    "canonical",
-    "canonical/typescript"
+    "eslint:recommended"
   ],
   "ignorePatterns": [
     "dist",
@@ -59,8 +58,6 @@
         }
       }
     ],
-    "require-await": 0,
-    "unicorn/numeric-separators-style": 0,
-    "unicorn/prevent-abbreviations": 0
+    "require-await": 0
   }
 }
