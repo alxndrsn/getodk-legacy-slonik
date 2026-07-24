@@ -14,7 +14,7 @@ import type {
   InternalStreamFunctionType,
 } from '../types';
 
-export const stream: InternalStreamFunctionType = async (connectionLogger, connection, clientConfiguration, rawSql, values, streamHandler, opts) => {
+export const stream: InternalStreamFunctionType = async (connectionLogger, connection, clientConfiguration, rawSql, values, streamHandler, opts:any) => {
   return executeQuery(
     connectionLogger,
     connection,
@@ -27,12 +27,13 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
         throw new UnexpectedStateError('Result cursors do not work with the native driver. Use JavaScript driver.');
       }
 
-      const query = new QueryStream(finalSql, finalValues as any[], opts as any);
+      const query = new QueryStream(finalSql, finalValues as any[], opts);
+      const isArrayMode = opts?.rowMode === 'array';
 
       const queryStream: Readable = finalConnection.query(query);
 
       let fields:any;
-      finalConnection.connection.once('rowDescription', (rowDescription:any) => {
+      if(!isArrayMode) finalConnection.connection.once('rowDescription', (rowDescription:any) => {
         fields = rowDescription.fields.map((f:any) => ({
           name: f.name,
           dataTypeId: f.dataTypeID,
@@ -61,12 +62,15 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
             }
           }
 
-          // eslint-disable-next-line fp/no-this
-          this.push({
-            fields,
-            row: finalRow,
-          });
-
+          if(isArrayMode) {
+            this.push(row);
+          } else {
+            // eslint-disable-next-line fp/no-this
+            this.push({
+              fields,
+              row: finalRow,
+            });
+          }
           callback();
         }));
 
