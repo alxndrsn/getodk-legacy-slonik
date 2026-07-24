@@ -101,7 +101,7 @@
     "build": "rm -fr ./dist && tsc -p tsconfig.lib.json",
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md",
     "eslint": "eslint --cache --ext '.ts'",
-    "lint": "npm run eslint ./src ./test && npm run type-check",
+    "lint": "yarn eslint ./src ./test && yarn type-check",
     "test": "NODE_ENV=test nyc ava --verbose",
     "type-check": "tsc -p ."
   },
