@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.stream = void 0;
 const through2_1 = __importDefault(require("through2"));
-const QueryStream_1 = require("../QueryStream");
+const pg_query_stream_1 = __importDefault(require("pg-query-stream"));
 const errors_1 = require("../errors");
 const routines_1 = require("../routines");
 const stream = async (connectionLogger, connection, clientConfiguration, rawSql, values, streamHandler, opts) => {
@@ -13,8 +13,15 @@ const stream = async (connectionLogger, connection, clientConfiguration, rawSql,
         if (connection.connection.slonik.native) {
             throw new errors_1.UnexpectedStateError('Result cursors do not work with the native driver. Use JavaScript driver.');
         }
-        const query = new QueryStream_1.QueryStream(finalSql, finalValues, opts);
+        const query = new pg_query_stream_1.default(finalSql, finalValues, opts);
         const queryStream = finalConnection.query(query);
+        let fields;
+        finalConnection.connection.once('rowDescription', (rowDescription) => {
+            fields = rowDescription.fields.map((f) => ({
+                name: f.name,
+                dataTypeId: f.dataTypeID,
+            }));
+        });
         const rowTransformers = [];
         for (const interceptor of clientConfiguration.interceptors) {
             if (interceptor.transformRow) {
@@ -25,16 +32,16 @@ const stream = async (connectionLogger, connection, clientConfiguration, rawSql,
             queryStream.on('error', (error) => {
                 reject(error);
             });
-            const transformedStream = queryStream.pipe(through2_1.default.obj(function (datum, enc, callback) {
-                let finalRow = datum.row;
+            const transformedStream = queryStream.pipe(through2_1.default.obj(function (row, enc, callback) {
+                let finalRow = row;
                 if (rowTransformers.length) {
                     for (const rowTransformer of rowTransformers) {
-                        finalRow = rowTransformer(executionContext, actualQuery, finalRow, datum.fields);
+                        finalRow = rowTransformer(executionContext, actualQuery, finalRow, fields);
                     }
                 }
                 // eslint-disable-next-line fp/no-this
                 this.push({
-                    fields: datum.fields,
+                    fields,
                     row: finalRow,
                 });
                 callback();

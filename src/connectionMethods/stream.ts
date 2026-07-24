@@ -2,9 +2,7 @@ import type {
   Readable,
 } from 'stream';
 import through from 'through2';
-import {
-  QueryStream,
-} from '../QueryStream';
+import QueryStream from 'pg-query-stream';
 import {
   UnexpectedStateError,
 } from '../errors';
@@ -29,9 +27,17 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
         throw new UnexpectedStateError('Result cursors do not work with the native driver. Use JavaScript driver.');
       }
 
-      const query = new QueryStream(finalSql, finalValues, opts);
+      const query = new QueryStream(finalSql, finalValues as any[], opts as any);
 
       const queryStream: Readable = finalConnection.query(query);
+
+      let fields:any;
+      finalConnection.connection.once('rowDescription', (rowDescription:any) => {
+        fields = rowDescription.fields.map((f:any) => ({
+          name: f.name,
+          dataTypeId: f.dataTypeID,
+        }));
+      });
 
       const rowTransformers: Array<NonNullable<InterceptorType['transformRow']>> = [];
 
@@ -46,18 +52,18 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
           reject(error);
         });
 
-        const transformedStream = queryStream.pipe(through.obj(function (datum: any, enc: any, callback: any) {
-          let finalRow = datum.row;
+        const transformedStream = queryStream.pipe(through.obj(function (row: any, enc: any, callback: any) {
+          let finalRow = row;
 
           if (rowTransformers.length) {
             for (const rowTransformer of rowTransformers) {
-              finalRow = rowTransformer(executionContext, actualQuery, finalRow, datum.fields);
+              finalRow = rowTransformer(executionContext, actualQuery, finalRow, fields);
             }
           }
 
           // eslint-disable-next-line fp/no-this
           this.push({
-            fields: datum.fields,
+            fields,
             row: finalRow,
           });
 
