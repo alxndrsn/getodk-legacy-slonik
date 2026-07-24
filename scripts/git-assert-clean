@@ -1,0 +1,25 @@
+#!/bin/bash -eu
+set -o pipefail
+shopt -s inherit_errexit
+
+log() {
+  echo "[git-assert-clean] $*"
+}
+
+log "Checking git status..."
+status="$(git status --porcelain)"
+
+if [[ "$status" != "" ]]; then
+  git status
+  log "!!!"
+  log "!!! Your working directory is dirty.  Make sure you have committed all changes !!!"
+  log "!!!"
+  if ! [[ "${CI-}" = "" ]]; then
+    log "!!! If changes in ./dist/ are reported, make sure \`yarn build\` has"
+    log "!!! been run, and changes to the ./dist/ directory are committed."
+    log "!!!"
+  fi
+  exit 1
+fi
+
+log "Everything OK."

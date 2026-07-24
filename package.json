@@ -28,11 +28,11 @@
     "hyperid": "^2.1.0",
     "is-plain-object": "^5.0.0",
     "iso8601-duration": "^1.3.0",
-    "pg": "^8.5.1",
+    "pg": "^8.22.0",
     "pg-connection-string": "^2.4.0",
     "pg-copy-streams": "^5.1.1",
     "pg-copy-streams-binary": "^2.0.1",
-    "pg-cursor": "^2.5.2",
+    "pg-query-stream": "^4.16.0",
     "postgres-array": "^3.0.1",
     "postgres-interval": "^3.0.0",
     "roarr": "^4.2.0",
@@ -99,7 +99,7 @@
     "url": "https://github.com/gajus/slonik"
   },
   "scripts": {
-    "build": "rm -fr ./dist && tsc -p tsconfig.lib.json",
+    "build": "rm -fr ./dist && tsc -p tsconfig.lib.json && rm -rf ./dist/test",
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md",
     "lint": "yarn lint:js && yarn lint:ts",
     "lint:js": "./scripts/eslint",

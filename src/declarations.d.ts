@@ -5,7 +5,6 @@ declare module 'get-stack-trace' {
     columnNumber: number,
   }>>;
 }
-declare module 'pg-cursor';
 declare module 'pg-copy-streams-binary';
 declare module 'pg/lib/type-overrides' {
   const TypeOverrides: new() => {
