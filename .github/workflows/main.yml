@@ -40,4 +40,11 @@ jobs:
         cache: 'yarn'
     - run: yarn install --immutable
     - run: yarn remove eslint-config-canonical
-    - run: TODO: upload yarn.lock
+    - uses: actions/upload-artifact@v5
+      if: always()
+      with:
+        name: yarn-lock-${{ matrix.node-version }}
+        path: yarn.lock
+    - run: yarn lint
+    - run: yarn build
+    - run: yarn test
