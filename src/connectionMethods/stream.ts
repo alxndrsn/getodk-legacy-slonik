@@ -16,7 +16,7 @@ import type {
   InternalStreamFunctionType,
 } from '../types';
 
-export const stream: InternalStreamFunctionType = async (connectionLogger, connection, clientConfiguration, rawSql, values, streamHandler) => {
+export const stream: InternalStreamFunctionType = async (connectionLogger, connection, clientConfiguration, rawSql, values, streamHandler, opts) => {
   return executeQuery(
     connectionLogger,
     connection,
@@ -29,7 +29,7 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
         throw new UnexpectedStateError('Result cursors do not work with the native driver. Use JavaScript driver.');
       }
 
-      const query = new QueryStream(finalSql, finalValues);
+      const query = new QueryStream(finalSql, finalValues, opts);
 
       const queryStream: Readable = finalConnection.query(query);
 

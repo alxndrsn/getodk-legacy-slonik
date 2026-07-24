@@ -127,7 +127,7 @@ export const bindPool = (
     one: mapConnection('one'),
     oneFirst: mapConnection('oneFirst'),
     query: mapConnection('query'),
-    stream: (streamQuery, streamHandler) => {
+    stream: (streamQuery, streamHandler, opts) => {
       assertSqlSqlToken(streamQuery);
 
       return createConnection(
@@ -136,10 +136,10 @@ export const bindPool = (
         clientConfiguration,
         'IMPLICIT_QUERY',
         (connectionLog, connection, boundConnection) => {
-          return boundConnection.stream(streamQuery, streamHandler);
+          return boundConnection.stream(streamQuery, streamHandler, opts);
         },
         (newPool) => {
-          return newPool.stream(streamQuery, streamHandler);
+          return newPool.stream(streamQuery, streamHandler, opts);
         },
         streamQuery,
       );
