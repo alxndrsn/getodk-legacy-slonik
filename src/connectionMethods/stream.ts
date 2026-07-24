@@ -28,11 +28,12 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
       }
 
       const query = new QueryStream(finalSql, finalValues as any[], opts as any);
+      const isArrayMode = opts?.rowMode === 'array';
 
       const queryStream: Readable = finalConnection.query(query);
 
       let fields:any;
-      finalConnection.connection.once('rowDescription', (rowDescription:any) => {
+      if(!isArrayMode) finalConnection.connection.once('rowDescription', (rowDescription:any) => {
         fields = rowDescription.fields.map((f:any) => ({
           name: f.name,
           dataTypeId: f.dataTypeID,
@@ -53,20 +54,23 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
         });
 
         const transformedStream = queryStream.pipe(through.obj(function (row: any, enc: any, callback: any) {
-          let finalRow = row;
+          if(isArrayMode) {
+            this.push(row);
+          } else {
+            let finalRow = row;
 
-          if (rowTransformers.length) {
-            for (const rowTransformer of rowTransformers) {
-              finalRow = rowTransformer(executionContext, actualQuery, finalRow, fields);
+            if (rowTransformers.length) {
+              for (const rowTransformer of rowTransformers) {
+                finalRow = rowTransformer(executionContext, actualQuery, finalRow, fields);
+              }
             }
+
+            // eslint-disable-next-line fp/no-this
+            this.push({
+              fields,
+              row: finalRow,
+            });
           }
-
-          // eslint-disable-next-line fp/no-this
-          this.push({
-            fields,
-            row: finalRow,
-          });
-
           callback();
         }));
 

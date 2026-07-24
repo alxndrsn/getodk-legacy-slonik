@@ -466,6 +466,34 @@ if (pgNativeBindingsAreAvailable) {
 
     await pool.end();
   });
+  test('streams with rowMode:array', async (t) => {
+    const pool = createPool(t.context.dsn);
+
+    await pool.query(sql`
+      INSERT INTO person (name) VALUES ('foo'), ('bar'), ('baz')
+    `);
+
+    const messages: Array<Record<string, unknown>> = [];
+
+    await pool.stream(sql`
+      SELECT name
+      FROM person
+    `, (stream) => {
+      stream.on('data', (datum) => {
+        messages.push(datum);
+      });
+    }, {
+      rowMode: 'array',
+    });
+
+    t.deepEqual(messages, [
+      [ 'foo' ],
+      [ 'bar' ],
+      [ 'baz' ],
+    ]);
+
+    await pool.end();
+  });
   test('applies type parsers to streamed rows', async (t) => {
     const pool = createPool(t.context.dsn, {
       typeParsers: [
