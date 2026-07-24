@@ -2,7 +2,6 @@
 /* eslint-disable fp/no-class */
 /* eslint-disable fp/no-this */
 /* eslint-disable id-match */
-/* eslint-disable promise/prefer-await-to-callbacks */
 
 import {
   Readable,
