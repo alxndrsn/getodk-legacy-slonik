@@ -488,20 +488,22 @@ if (pgNativeBindingsAreAvailable) {
       types: noTypes,
     });
 
-    t.deepEqual(messages, [ {
-      fields: [
-        { dataTypeId:  20, name:'num'  },
-        { dataTypeId:1184, name:'date' },
-        { dataTypeId:3802, name:'pojo' },
-        { dataTypeId:1007, name:'nums' },
-      ],
-      row: {
-        num: '10821',
-        date: '2026-07-24 00:00:00+00',
-        pojo: '{"a": 1}',
-        nums: '{1,2,3}',
+    t.deepEqual(messages, [
+      {
+        fields: [
+          { dataTypeId:  20, name:'num'  },
+          { dataTypeId:1184, name:'date' },
+          { dataTypeId:3802, name:'pojo' },
+          { dataTypeId:1007, name:'nums' },
+        ],
+        row: {
+          num: '10821',
+          date: '2026-07-24 00:00:00+00',
+          pojo: '{"a": 1}',
+          nums: '{1,2,3}',
+        },
       },
-    } ]);
+    ]);
 
     await pool.end();
   });
