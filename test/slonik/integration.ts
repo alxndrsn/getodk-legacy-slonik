@@ -8,7 +8,10 @@ import anyTest, {
   beforeEach as anyBeforeEach,
 } from 'ava';
 import delay from 'delay';
-import { TypeOverrides, types } from 'pg';
+import {
+  TypeOverrides,
+  types,
+} from 'pg';
 import {
   BackendTerminatedError,
   createPool,
