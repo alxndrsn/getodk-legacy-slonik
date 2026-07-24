@@ -14,7 +14,7 @@ if [[ "$status" != "" ]]; then
   log "!!!"
   log "!!! Your working directory is dirty.  Make sure you have committed all changes !!!"
   log "!!!"
-  if [[ "${CI-}" = "" ]]; then
+  if ! [[ "${CI-}" = "" ]]; then
     log "!!! If changes in ./dist/ are reported, make sure \`yarn build\` has"
     log "!!! been run, and changes to the ./dist/ directory are committed."
     log "!!!"
