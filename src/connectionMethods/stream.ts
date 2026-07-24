@@ -31,9 +31,9 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
 
       const queryStream: Readable = finalConnection.query(query);
 
-      let fields;
-      finalConnection.connection.once('rowDescription', rowDescription => {
-        fields = rowDescription.fields.map(f => ({
+      let fields:any;
+      finalConnection.connection.once('rowDescription', (rowDescription:any) => {
+        fields = rowDescription.fields.map((f:any) => ({
           name: f.name,
           dataTypeId: f.dataTypeID,
         }));
