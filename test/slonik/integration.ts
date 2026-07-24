@@ -8,10 +8,8 @@ import anyTest, {
   beforeEach as anyBeforeEach,
 } from 'ava';
 import delay from 'delay';
-import {
-  TypeOverrides,
-  types,
-} from 'pg';
+// eslint-disable-next-line object-curly-newline, @typescript-eslint/prefer-ts-expect-error
+import { types, TypeOverrides } from 'pg'; // @ts-ignore
 import {
   BackendTerminatedError,
   createPool,
@@ -473,9 +471,9 @@ if (pgNativeBindingsAreAvailable) {
   test('streams with no conversions', async (t) => {
     const pool = createPool(t.context.dsn);
 
-    const messages: Array<Array<any>> = [];
+    const messages: Array<Record<string, unknown>> = [];
 
-    const noop = x => x;
+    const noop = (x:any) => x;
     const noTypes = { getTypeParser:() => noop };
 
     await pool.stream(sql`
@@ -520,7 +518,7 @@ if (pgNativeBindingsAreAvailable) {
     const messages: Array<Array<any>> = [];
 
     const uppercaseStrings = new TypeOverrides();
-    uppercaseStrings.setTypeParser(types.builtins.TEXT, str => str.toUpperCase());
+    uppercaseStrings.setTypeParser(types.builtins.TEXT, (str:string) => str?.toUpperCase());
 
     await pool.stream(sql`
       SELECT name
