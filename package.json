@@ -4,7 +4,7 @@
     "name": "Gajus Kuizinas",
     "url": "http://gajus.com"
   },
-  "packageManager": "yarn@3.8.7",
+  "packageManager": "yarn@4.17.1",
   "resolutions": {
     "get-intrinsic": "1.2.4"
   },
@@ -112,6 +112,6 @@
   "version": "23.6.2-4",
   "volta": {
     "node": "24.18.0",
-    "yarn": "3.8.7"
+    "yarn": "4.17.1"
   }
 }
