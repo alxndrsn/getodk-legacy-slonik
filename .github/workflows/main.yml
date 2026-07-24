@@ -39,7 +39,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: yarn install --immutable
-    - run: yarn add -D @typescript-eslint/parser@4.33.0 @typescript-eslint/eslint-plugin@4.33.0
     - uses: actions/upload-artifact@v5
       if: always()
       with:
