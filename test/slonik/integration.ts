@@ -8,8 +8,9 @@ import anyTest, {
   beforeEach as anyBeforeEach,
 } from 'ava';
 import delay from 'delay';
-// eslint-disable-next-line object-curly-newline, @typescript-eslint/prefer-ts-expect-error
-import { types, TypeOverrides } from 'pg'; // @ts-ignore
+// eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
+// @ts-ignore
+import { types, TypeOverrides } from 'pg'; // eslint-disable-line object-curly-newline, @typescript-eslint/prefer-ts-expect-error
 import {
   BackendTerminatedError,
   createPool,
