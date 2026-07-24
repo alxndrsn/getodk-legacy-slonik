@@ -31,7 +31,7 @@ jobs:
       with:
         name: yarn-lock-${{ matrix.node-version }}
         path: yarn.lock
-    - run: yarn npm audit --environment production
+    - run: yarn npm audit --environment production --recursive
     - run: yarn lint
     - run: yarn build
     - run: yarn test:ava
