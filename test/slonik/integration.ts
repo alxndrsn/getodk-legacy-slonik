@@ -595,6 +595,61 @@ if (pgNativeBindingsAreAvailable) {
 
     await pool.end();
   });
+  test('obeys batchSize option', async (t) => {
+    const pool = createPool(t.context.dsn);
+
+    await pool.query(sql`
+      INSERT INTO person (name) VALUES
+        ('a'), ('b'), ('c'), ('d'), ('e'), ('f'), ('g'), ('h'), ('i'), ('j'),
+        ('k'), ('l'), ('m'), ('n'), ('o'), ('p'), ('q'), ('r'), ('s'), ('t'),
+        ('u'), ('v'), ('w'), ('x'), ('y'), ('z')
+    `);
+
+    const messages: Array<Record<string, unknown>> = [];
+
+    await new Promise<void>((resolve, reject) => {
+      pool.stream(sql`
+        SELECT name
+        FROM person
+      `, (stream) => {
+        stream.on('error', reject);
+        stream.on('data', (datum) => {
+          messages.push(datum);
+          resolve();
+        });
+      }, {
+        batchSize: 23,
+      });
+    });
+
+    t.deepEqual(messages, [
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'a', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'b', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'c', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'd', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'e', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'f', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'g', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'h', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'i', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'j', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'k', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'l', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'm', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'n', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'o', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'p', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'q', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'r', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 's', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 't', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'u', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'v', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'w', }, },
+    ]);
+
+    await pool.end();
+  });
 }
 
 test('explicit connection configuration is persisted', async (t) => {

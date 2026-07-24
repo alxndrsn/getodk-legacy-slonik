@@ -155,7 +155,7 @@ export const bindTransactionConnection = (
         query.values,
       );
     },
-    stream: (query, streamHandler) => {
+    stream: (query, streamHandler, opts) => {
       assertSqlSqlToken(query);
       assertTransactionDepth();
 
@@ -166,6 +166,7 @@ export const bindTransactionConnection = (
         query.sql,
         query.values,
         streamHandler,
+        opts,
       );
     },
     transaction: (handler) => {
