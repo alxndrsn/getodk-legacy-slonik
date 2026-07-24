@@ -35,3 +35,4 @@ jobs:
     - run: yarn lint
     - run: yarn build
     - run: yarn test:ava
+    - run: scripts/git-assert-clean
