@@ -1,5 +1,4 @@
 /* eslint-disable no-new */
-/* eslint-disable unicorn/consistent-function-scoping */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   expectTypeOf,
