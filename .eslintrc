@@ -1,7 +1,12 @@
 {
   "extends": [
-    "canonical",
-    "canonical/typescript"
+    "eslint:recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "fp",
+    "import"
   ],
   "ignorePatterns": [
     "dist",
@@ -19,7 +24,8 @@
     }
   ],
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.json",
+    "sourceType": "module"
   },
   "root": true,
   "rules": {
@@ -59,8 +65,6 @@
         }
       }
     ],
-    "require-await": 0,
-    "unicorn/numeric-separators-style": 0,
-    "unicorn/prevent-abbreviations": 0
+    "require-await": 0
   }
 }

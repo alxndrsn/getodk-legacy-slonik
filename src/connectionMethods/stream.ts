@@ -1,5 +1,3 @@
-/* eslint-disable promise/prefer-await-to-callbacks */
-
 import type {
   Readable,
 } from 'stream';
@@ -57,7 +55,7 @@ export const stream: InternalStreamFunctionType = async (connectionLogger, conne
             }
           }
 
-          // eslint-disable-next-line fp/no-this, babel/no-invalid-this
+          // eslint-disable-next-line fp/no-this
           this.push({
             fields: datum.fields,
             row: finalRow,
