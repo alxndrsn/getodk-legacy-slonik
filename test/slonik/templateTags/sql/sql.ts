@@ -5,9 +5,6 @@ import {
 import {
   SqlToken,
 } from '../../../../src/tokens';
-import type {
-  SqlSqlTokenType,
-} from '../../../../src/types';
 
 const sql = createSqlTag();
 

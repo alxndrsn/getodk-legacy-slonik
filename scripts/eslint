@@ -5,5 +5,11 @@ shopt -s inherit_errexit
 log() { echo >&2 "[$(basename "$0")] $*"; }
 
 log "Linting..."
-ESLINT_USE_FLAT_CONFIG=false ./node_modules/eslint/bin/eslint.js --cache --ext '.ts' . 2> >(grep -Ev 'ESLintRCWarning|--trace-warnings' >&2) "$@"
+ESLINT_USE_FLAT_CONFIG=false \
+./node_modules/eslint/bin/eslint.js \
+    --cache \
+    --ext '.ts' \
+    --max-warnings 0 \
+    . \
+    2> >(grep -Ev 'ESLintRCWarning|--trace-warnings' >&2) "$@"
 log "Completed OK."
