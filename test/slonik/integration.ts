@@ -8,6 +8,7 @@ import anyTest, {
   beforeEach as anyBeforeEach,
 } from 'ava';
 import delay from 'delay';
+import { TypeOverrides, types } from 'pg';
 import {
   BackendTerminatedError,
   createPool,
@@ -462,6 +463,76 @@ if (pgNativeBindingsAreAvailable) {
           name: 'baz',
         },
       },
+    ]);
+
+    await pool.end();
+  });
+  test('streams with no conversions', async (t) => {
+    const pool = createPool(t.context.dsn);
+
+    const messages: Array<Array<any>> = [];
+
+    const noop = x => x;
+    const noTypes = { getTypeParser:() => noop };
+
+    await pool.stream(sql`
+       SELECT 10821::INT8 AS num
+            , '2026-07-24'::TIMESTAMPTZ AS date
+            , '{"a": 1}'::JSONB AS pojo
+            , ARRAY[1, 2, 3]::INT[] AS nums
+    `, (stream) => {
+      stream.on('data', (datum) => {
+        messages.push(datum);
+      });
+    }, {
+      types: noTypes,
+    });
+
+    t.deepEqual(messages, [ {
+      fields: [
+        { dataTypeId:  20, name:'num'  },
+        { dataTypeId:1184, name:'date' },
+        { dataTypeId:3802, name:'pojo' },
+        { dataTypeId:1007, name:'nums' },
+      ],
+      row: {
+        num: '10821',
+        date: '2026-07-24 00:00:00+00',
+        pojo: '{"a": 1}',
+        nums: '{1,2,3}',
+      },
+    } ]);
+
+    await pool.end();
+  });
+  test('streams with rowMode:array + types', async (t) => {
+    const pool = createPool(t.context.dsn);
+
+    await pool.query(sql`
+      INSERT INTO person (name) VALUES ('foo'), ('bar'), ('baz')
+    `);
+
+    const messages: Array<Array<any>> = [];
+
+    const uppercaseStrings = new TypeOverrides();
+    uppercaseStrings.setTypeParser(types.builtins.TEXT, str => str.toUpperCase());
+
+    await pool.stream(sql`
+      SELECT name
+      FROM person
+    `, (stream) => {
+      stream.on('data', (datum) => {
+        messages.push(datum);
+      });
+    }, {
+      rowMode: 'array',
+      types: uppercaseStrings,
+    });
+
+    t.deepEqual(messages, [
+      [ 'FOO' ],
+      [ 'BAR' ],
+      [ 'BAZ' ],
     ]);
 
     await pool.end();
