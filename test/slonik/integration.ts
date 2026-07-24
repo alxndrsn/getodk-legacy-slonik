@@ -595,6 +595,45 @@ if (pgNativeBindingsAreAvailable) {
 
     await pool.end();
   });
+  test.only('obeys batchSize option', async (t) => {
+    const pool = createPool(t.context.dsn);
+
+    await pool.query(sql`
+      INSERT INTO person (name) VALUES
+        ('a'), ('b'), ('c'), ('d'), ('e'), ('f'), ('g'), ('h'), ('i'), ('j'),
+        ('k'), ('l'), ('m'), ('n'), ('o'), ('p'), ('q'), ('r'), ('s'), ('t'),
+        ('u'), ('v'), ('w'), ('x'), ('y'), ('z')
+    `);
+
+    const messages: Array<Record<string, unknown>> = [];
+
+    await new Promise((resolve, reject) => {
+      pool.stream(sql`
+        SELECT name
+        FROM person
+      `, (stream) => {
+        stream.on('error', reject);
+        stream.on('data', (datum) => {
+          messages.push(datum);
+          resolve();
+        });
+      }, {
+        batchSize: 7,
+      });
+    });
+
+    t.deepEqual(messages, [
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'a', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'b', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'c', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'd', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'e', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'f', }, },
+      { fields: [ { dataTypeId: 25, name: 'name', }, ], row: { name: 'g', }, },
+    ]);
+
+    await pool.end();
+  });
 }
 
 test('explicit connection configuration is persisted', async (t) => {
